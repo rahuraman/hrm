@@ -1,0 +1,11 @@
+Registration number, grade, open date, key skill, expected closing date, negotiation status, hourly rate
+REG-2024-001, Senior, 2024-01-15, Java/Spring Boot, 2024-03-30, Closed, 85.00
+REG-2024-002, Mid, 2024-02-01, React/TypeScript, 2024-04-15, In Progress, 65.00
+REG-2024-003, Junior, 2024-02-20, Python/Data Analysis, 2024-05-01, Open, 45.00
+REG-2024-004, Senior, 2024-03-05, AWS/DevOps, 2024-06-10, In Progress, 95.00
+REG-2024-005, Lead, 2024-03-18, Project Management, 2024-04-30, Closed, 110.00
+REG-2024-006, Mid, 2024-04-02, SQL/Database Design, 2024-07-15, Open, 58.00
+REG-2024-007, Senior, 2024-04-22, Cybersecurity, 2024-08-01, In Progress, 92.00
+REG-2024-008, Junior, 2024-05-10, UI/UX Design, 2024-06-20, Open, 42.00
+REG-2024-009, Mid, 2024-05-28, .NET/C#, 2024-09-15, On Hold, 62.00
+REG-2024-010, Senior, 2024-06-12, Machine Learning, 2024-10-01, In Progress, 98.00

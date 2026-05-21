@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HRM Resource Onboarding &amp; Loss Report</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #1a2332;
+      --muted: #5c6b7a;
+      --border: #dde3ea;
+      --green: #0d7a4a;
+      --green-bg: #e6f4ed;
+      --amber: #9a6700;
+      --amber-bg: #fff8e6;
+      --red: #b42318;
+      --red-bg: #fdecea;
+      --blue: #175cd3;
+      --blue-bg: #eff4ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+    h1 { margin: 0 0 0.25rem; font-size: 1.75rem; }
+    .meta { color: var(--muted); font-size: 0.95rem; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .card-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .card-value { font-size: 1.5rem; font-weight: 700; margin-top: 0.25rem; }
+    .card-value.loss { color: var(--red); }
+    .status-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .status-chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+    }
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 0.65rem 0.85rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #eef1f5; font-weight: 600; white-space: nowrap; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .badge-closed { background: var(--green-bg); color: var(--green); }
+    .badge-progress { background: var(--blue-bg); color: var(--blue); }
+    .badge-open { background: var(--amber-bg); color: var(--amber); }
+    .badge-hold { background: #f0f0f0; color: #444; }
+    .badge-default { background: #eee; color: #333; }
+    .outcome-onboarded { background: var(--green-bg); color: var(--green); }
+    .outcome-risk { background: var(--amber-bg); color: var(--amber); }
+    .outcome-loss { background: var(--red-bg); color: var(--red); }
+    footer {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    @media print {
+      body { background: white; padding: 0; }
+      .card, .table-wrap { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>HRM Resource Onboarding &amp; Loss Report</h1>
+      <p class="meta">As of <strong>2026-05-21</strong> &middot; Source: <strong>hrmdata.txt</strong></p>
+    </header>
+
+    <section class="cards">
+      <div class="card">
+        <div class="card-label">Total resources</div>
+        <div class="card-value">10</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Onboarded</div>
+        <div class="card-value">2</div>
+      </div>
+      <div class="card">
+        <div class="card-label">At risk</div>
+        <div class="card-value">0</div>
+      </div>
+      <div class="card">
+        <div class="card-label">In loss</div>
+        <div class="card-value">8</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Total loss</div>
+        <div class="card-value loss">$3,012,704.00</div>
+      </div>
+    </section>
+
+    <section class="status-grid">
+      <span class="status-chip">Closed: <strong>2</strong></span>
+      <span class="status-chip">In Progress: <strong>4</strong></span>
+      <span class="status-chip">On Hold: <strong>1</strong></span>
+      <span class="status-chip">Open: <strong>3</strong></span>
+    </section>
+
+    <section class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Registration</th>
+            <th>Grade</th>
+            <th>Key skill</th>
+            <th>Open date</th>
+            <th>Closing date</th>
+            <th>Status</th>
+            <th>Outcome</th>
+            <th class="num">Days</th>
+            <th class="num">Daily burn</th>
+            <th class="num">Loss</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>REG-2024-004</td>
+            <td>Senior</td>
+            <td>AWS/DevOps</td>
+            <td>2024-03-05</td>
+            <td>2024-06-10</td>
+            <td><span class="badge badge-progress">In Progress</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">710 overdue</td>
+            <td class="num">$760.00</td>
+            <td class="num">$539,600.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-007</td>
+            <td>Senior</td>
+            <td>Cybersecurity</td>
+            <td>2024-04-22</td>
+            <td>2024-08-01</td>
+            <td><span class="badge badge-progress">In Progress</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">658 overdue</td>
+            <td class="num">$736.00</td>
+            <td class="num">$484,288.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-010</td>
+            <td>Senior</td>
+            <td>Machine Learning</td>
+            <td>2024-06-12</td>
+            <td>2024-10-01</td>
+            <td><span class="badge badge-progress">In Progress</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">597 overdue</td>
+            <td class="num">$784.00</td>
+            <td class="num">$468,048.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-002</td>
+            <td>Mid</td>
+            <td>React/TypeScript</td>
+            <td>2024-02-01</td>
+            <td>2024-04-15</td>
+            <td><span class="badge badge-progress">In Progress</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">766 overdue</td>
+            <td class="num">$520.00</td>
+            <td class="num">$398,320.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-006</td>
+            <td>Mid</td>
+            <td>SQL/Database Design</td>
+            <td>2024-04-02</td>
+            <td>2024-07-15</td>
+            <td><span class="badge badge-open">Open</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">675 overdue</td>
+            <td class="num">$464.00</td>
+            <td class="num">$313,200.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-009</td>
+            <td>Mid</td>
+            <td>.NET/C#</td>
+            <td>2024-05-28</td>
+            <td>2024-09-15</td>
+            <td><span class="badge badge-hold">On Hold</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">613 overdue</td>
+            <td class="num">$496.00</td>
+            <td class="num">$304,048.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-003</td>
+            <td>Junior</td>
+            <td>Python/Data Analysis</td>
+            <td>2024-02-20</td>
+            <td>2024-05-01</td>
+            <td><span class="badge badge-open">Open</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">750 overdue</td>
+            <td class="num">$360.00</td>
+            <td class="num">$270,000.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-008</td>
+            <td>Junior</td>
+            <td>UI/UX Design</td>
+            <td>2024-05-10</td>
+            <td>2024-06-20</td>
+            <td><span class="badge badge-open">Open</span></td>
+            <td><span class="badge outcome-loss">Loss</span></td>
+            <td class="num">700 overdue</td>
+            <td class="num">$336.00</td>
+            <td class="num">$235,200.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-001</td>
+            <td>Senior</td>
+            <td>Java/Spring Boot</td>
+            <td>2024-01-15</td>
+            <td>2024-03-30</td>
+            <td><span class="badge badge-closed">Closed</span></td>
+            <td><span class="badge outcome-onboarded">Onboarded</span></td>
+            <td class="num">—</td>
+            <td class="num">$680.00</td>
+            <td class="num">$0.00</td>
+          </tr>
+          <tr>
+            <td>REG-2024-005</td>
+            <td>Lead</td>
+            <td>Project Management</td>
+            <td>2024-03-18</td>
+            <td>2024-04-30</td>
+            <td><span class="badge badge-closed">Closed</span></td>
+            <td><span class="badge outcome-onboarded">Onboarded</span></td>
+            <td class="num">—</td>
+            <td class="num">$880.00</td>
+            <td class="num">$0.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      <p><strong>How loss is calculated:</strong> A resource is onboarded only when negotiation status is
+      <em>Closed</em>. If status is not Closed after the expected closing date, loss accrues at
+      <strong>8 billable hours per day</strong> &times; hourly rate for each overdue day.</p>
+      <p>Loss figures represent unbilled capacity (opportunity cost), not payroll or other costs.
+      Rows marked Closed are assumed fully onboarded with zero loss.</p>
+    </footer>
+  </div>
+</body>
+</html>
